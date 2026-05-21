@@ -15,27 +15,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\core\Card.hpp">
+    <ClInclude Include="..\include\core\Card.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\core\Deck.hpp">
+    <ClInclude Include="..\include\core\Deck.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\core\Hand.hpp">
+    <ClInclude Include="..\include\core\GameManager.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\core\Hand.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\core\Card.cpp">
+    <ClCompile Include="..\src\core\Card.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\Deck.cpp">
+    <ClCompile Include="..\src\core\Deck.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\Hand.cpp">
+    <ClCompile Include="..\src\core\GameManager.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\main_console.cpp">
+    <ClCompile Include="..\src\core\Hand.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main_console.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

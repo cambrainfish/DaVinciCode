@@ -97,6 +97,38 @@ void Hand::insertAt(std::size_t index, const Card& card) {
     }
 }
 
+bool Hand::isHidden(std::size_t index) const noexcept {
+    if (index >= cards_.size()) {
+        return false;
+    }
+    return !cards_[index].isRevealed();
+}
+
+void Hand::revealAt(std::size_t index) {
+    if (index >= cards_.size()) {
+        throw std::out_of_range("reveal index out of range");
+    }
+    cards_[index].setRevealed(true);
+}
+
+bool Hand::isGuessCorrect(std::size_t index, int value, CardColor color) const noexcept {
+    if (index >= cards_.size() || cards_[index].isRevealed()) {
+        return false;
+    }
+    const Card& target = cards_[index];
+    if (!target.isJoker()) {
+        return target.value() == value && target.color() == color;
+    }
+    auto trialHand = cards_;
+    trialHand[index] = Card{value, color, false};
+    for (std::size_t i = 1; i < trialHand.size(); ++i) {
+        if (violatesAdjacent(trialHand[i - 1], trialHand[i])) {
+            return false;
+        }
+    }
+    return canAssignJokers(trialHand, 0);
+}
+
 bool Hand::isValidOrder() const noexcept {
     for (std::size_t i = 1; i < cards_.size(); ++i) {
         if (violatesAdjacent(cards_[i - 1], cards_[i])) {

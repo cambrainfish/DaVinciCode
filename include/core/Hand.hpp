@@ -26,6 +26,13 @@ public:
     /// 检查是否存在一种 Joker 赋值使整手牌满足排序规则
     [[nodiscard]] bool isValidOrder() const noexcept;
 
+    [[nodiscard]] bool isHidden(std::size_t index) const noexcept;
+    void revealAt(std::size_t index);
+
+    /// 猜牌：仅对未翻开牌有效；Joker 位需与整手排序相容
+    [[nodiscard]] bool isGuessCorrect(std::size_t index, int value,
+                                      CardColor color) const noexcept;
+
     void clear() noexcept { cards_.clear(); }
 
 private:

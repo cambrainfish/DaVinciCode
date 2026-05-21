@@ -18,6 +18,19 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\include\core\Card.hpp" />
+    <ClInclude Include="..\include\core\Deck.hpp" />
+    <ClInclude Include="..\include\core\GameManager.hpp" />
+    <ClInclude Include="..\include\core\Hand.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\core\Card.cpp" />
+    <ClCompile Include="..\src\core\Deck.cpp" />
+    <ClCompile Include="..\src\core\GameManager.cpp" />
+    <ClCompile Include="..\src\core\Hand.cpp" />
+    <ClCompile Include="..\src\main_console.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>18.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -71,7 +84,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <ProjectIncludeDir>$(ProjectDir)..\..\include</ProjectIncludeDir>
+    <ProjectIncludeDir>$(ProjectDir)..\include</ProjectIncludeDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -133,17 +146,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\include\core\Card.hpp" />
-    <ClInclude Include="..\..\include\core\Deck.hpp" />
-    <ClInclude Include="..\..\include\core\Hand.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\src\core\Card.cpp" />
-    <ClCompile Include="..\..\src\core\Deck.cpp" />
-    <ClCompile Include="..\..\src\core\Hand.cpp" />
-    <ClCompile Include="..\..\src\main_console.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

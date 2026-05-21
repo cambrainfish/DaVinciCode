@@ -9,6 +9,7 @@ add_library(dvcore
     src/core/Card.cpp
     src/core/Deck.cpp
     src/core/Hand.cpp
+    src/core/GameManager.cpp
 )
 target_include_directories(dvcore PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 

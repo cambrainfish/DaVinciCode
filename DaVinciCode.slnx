@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="DaVinciCode/DaVinciCode.vcxproj" />
+  <Project Path="DaVinciCode/DaVinciCode.vcxproj" Id="b6294590-e4d2-4d0d-9d5b-c1a3a7463293" />
 </Solution>
