@@ -36,7 +36,7 @@ void GameManager::startNewGame() {
     dealToPlayer(PlayerId::Player0);
     dealToPlayer(PlayerId::Player1);
 
-    phase_ = GamePhase::TurnDrawChoice;
+    beginTurnDrawPhase();
 }
 
 PlayerId GameManager::opponent(PlayerId p) const noexcept {
@@ -56,11 +56,23 @@ void GameManager::requirePhase(GamePhase expected) const {
 }
 
 bool GameManager::canDraw() const noexcept {
-    return phase_ == GamePhase::TurnDrawChoice && !deck_.empty();
+    return phase_ == GamePhase::TurnDrawRequired && !deck_.empty();
 }
 
-bool GameManager::canSkipDraw() const noexcept {
-    return phase_ == GamePhase::TurnDrawChoice;
+bool GameManager::canDrawFrom(CardColor pile) const noexcept {
+    return canDraw() && !deck_.empty(pile);
+}
+
+bool GameManager::mustDrawBeforeGuess() const noexcept {
+    return phase_ == GamePhase::TurnDrawRequired;
+}
+
+void GameManager::beginTurnDrawPhase() {
+    if (deck_.empty()) {
+        phase_ = GamePhase::TurnGuess;
+    } else {
+        phase_ = GamePhase::TurnDrawRequired;
+    }
 }
 
 bool GameManager::canPlacePendingHidden() const noexcept {
@@ -83,25 +95,18 @@ bool GameManager::canStopGuessing() const noexcept {
     return phase_ == GamePhase::TurnAfterCorrectGuess;
 }
 
-bool GameManager::canRevealPenalty() const noexcept {
-    return phase_ == GamePhase::TurnRevealPenalty;
-}
 
-Card GameManager::draw() {
-    requirePhase(GamePhase::TurnDrawChoice);
-    if (deck_.empty()) {
-        throw std::logic_error("cannot draw from empty deck");
+
+Card GameManager::draw(CardColor pile) {
+    requirePhase(GamePhase::TurnDrawRequired);
+    if (!canDrawFrom(pile)) {
+        throw std::logic_error("cannot draw from empty or invalid pile");
     }
-    Card c = deck_.draw();
+    Card c = deck_.draw(pile);
     c.setRevealed(false);
     pending_draw_ = c;
     phase_ = GamePhase::TurnGuess;
     return c;
-}
-
-void GameManager::skipDraw() {
-    requirePhase(GamePhase::TurnDrawChoice);
-    phase_ = GamePhase::TurnGuess;
 }
 
 void GameManager::insertPendingInto(std::size_t index, bool reveal) {
@@ -111,7 +116,11 @@ void GameManager::insertPendingInto(std::size_t index, bool reveal) {
     Card c = *pending_draw_;
     c.setRevealed(reveal);
     Hand& mine = hands_[toIndex(current_)];
-    mine.insertAt(index, c);
+    if (c.isJoker()) {
+        mine.insertAt(index, c);
+    } else {
+        mine.insertSorted(c);
+    }
     pending_draw_.reset();
 }
 
@@ -124,7 +133,7 @@ void GameManager::placePendingHidden(std::size_t index) {
 void GameManager::placePendingRevealed(std::size_t index) {
     requirePhase(GamePhase::TurnPlacePendingRevealed);
     insertPendingInto(index, true);
-    phase_ = GamePhase::TurnRevealPenalty;
+    endTurn();
 }
 
 GuessOutcome GameManager::guess(PlayerId target, std::size_t index, int value,
@@ -155,7 +164,7 @@ GuessOutcome GameManager::guess(PlayerId target, std::size_t index, int value,
     if (pending_draw_.has_value()) {
         phase_ = GamePhase::TurnPlacePendingRevealed;
     } else {
-        phase_ = GamePhase::TurnRevealPenalty;
+        phase_ = GamePhase::GameOver;
     }
     return GuessOutcome::Wrong;
 }
@@ -182,7 +191,7 @@ void GameManager::stopGuessingAndEndTurn() {
 }
 
 void GameManager::applyPenaltyReveal(std::size_t ownIndex) {
-    requirePhase(GamePhase::TurnRevealPenalty);
+    requirePhase(GamePhase::TurnPlacePendingRevealed);
     Hand& mine = hands_[toIndex(current_)];
     if (!mine.isHidden(ownIndex)) {
         throw std::invalid_argument("penalty target must be hidden");
@@ -199,7 +208,7 @@ void GameManager::endTurn() {
         throw std::logic_error("cannot end turn with pending draw");
     }
     current_ = opponent(current_);
-    phase_ = GamePhase::TurnDrawChoice;
+    beginTurnDrawPhase();
 }
 
 }  // namespace dvcode

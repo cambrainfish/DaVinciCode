@@ -5,6 +5,7 @@ Debug/
 Release/
 .vs/
 *.user
+EasyX.props
 *.suo
 *.obj
 *.pdb

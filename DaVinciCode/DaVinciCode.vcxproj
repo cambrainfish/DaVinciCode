@@ -23,12 +23,14 @@
     <ClInclude Include="..\include\core\Deck.hpp" />
     <ClInclude Include="..\include\core\GameManager.hpp" />
     <ClInclude Include="..\include\core\Hand.hpp" />
+    <ClInclude Include="..\include\ui\ConsoleGame.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\core\Card.cpp" />
     <ClCompile Include="..\src\core\Deck.cpp" />
     <ClCompile Include="..\src\core\GameManager.cpp" />
     <ClCompile Include="..\src\core\Hand.cpp" />
+    <ClCompile Include="..\src\ui\ConsoleGame.cpp" />
     <ClCompile Include="..\src\main_console.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -94,6 +96,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectIncludeDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -110,6 +113,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectIncludeDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -124,6 +128,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectIncludeDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -140,6 +145,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectIncludeDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
